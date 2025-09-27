@@ -61,7 +61,6 @@ def handle_input(events):
 
 
 def move_player(direction: str):
-
     _direction = (0, 0)
     if direction == "up":
         _direction = (0, -1)

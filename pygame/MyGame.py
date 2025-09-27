@@ -22,6 +22,7 @@ class Map:
         self.cell_size_y = 600 / self.height
         self.set_cell(0, 0, self.player)
         self.set_cell(width - 1, height - 1, self.goal)
+        self._put_walls()
 
     def render(self, screen) -> None:
         for i in range(self.height):
@@ -38,13 +39,26 @@ class Map:
     def is_inside(self, x: int, y: int) -> bool:
         return 0 <= x < self.width and 0 <= y < self.height
 
-    def move_player(self, x, y) -> bool:
+    def move_player(self, x: int, y: int) -> bool:
         if not self.is_inside(x, y):
+            return False
+        if "wall" in self.map[y][x].items:
             return False
 
         self.player.items.remove("player")
         self.player = self.map[y][x]
         self.player.items.append("player")
+
+    def _put_walls(self):
+        self.map[2][0].items.append("wall")
+        self.map[2][1].items.append("wall")
+        self.map[2][2].items.append("wall")
+        self.map[2][3].items.append("wall")
+        self.map[2][4].items.append("wall")
+        self.map[4][9].items.append("wall")
+        self.map[4][8].items.append("wall")
+        self.map[4][7].items.append("wall")
+        self.map[4][6].items.append("wall")
 
 
 class Cell:
@@ -61,6 +75,8 @@ class Cell:
                     pygame.draw.rect(screen, PLAYER_COLOR, (x * size_x, y * size_y, size_x, size_y))
                 elif item == "goal":
                     pygame.draw.rect(screen, GOAL_COLOR, (x * size_x, y * size_y, size_x, size_y))
+                elif item == "wall":
+                    pygame.draw.rect(screen, BORDER_COLOR, (x * size_x, y * size_y, size_x, size_y))
 
     def get_position(self, map) -> Tuple[int, int]:
         for i in range(map.height):

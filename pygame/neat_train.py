@@ -27,6 +27,7 @@ activation_mutate_rate= 0.0
 activation_options    = sigmoid
 
 aggregation_default   = sum
+aggregation_mutate_rate = 0.0
 aggregation_options   = sum
 
 # Bias
